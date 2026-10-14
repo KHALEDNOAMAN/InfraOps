@@ -1,15 +1,31 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from datetime import datetime, timedelta
-from jose import JWTError, jwt
+import os
+from datetime import datetime, timedelta, timezone
+
+import jwt
 from passlib.context import CryptContext
 from ..database import get_db
 from .. import models
 
 router = APIRouter()
 
-SECRET_KEY = "dummy-secret-key-for-dev"
+SECRET_KEY = os.environ.get("INFRAOPS_SECRET_KEY")
+if not SECRET_KEY:
+    # No fallback on purpose. A signing key with a working default is a
+    # key nobody ever sets, and the old default shipped in this repo.
+    raise RuntimeError(
+        "INFRAOPS_SECRET_KEY is not set. Generate one with:\n"
+        "  python -c \"import secrets; print(secrets.token_urlsafe(48))\""
+    )
+if len(SECRET_KEY.encode()) < 32:
+    # RFC 7518 section 3.2: an HMAC key shorter than the digest is weak.
+    # PyJWT only warns about this. Refusing is better than warning.
+    raise RuntimeError(
+        "INFRAOPS_SECRET_KEY must be at least 32 bytes, got "
+        f"{len(SECRET_KEY.encode())}."
+    )
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -24,7 +40,7 @@ def get_password_hash(password):
 
 def create_access_token(data: dict):
     to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
@@ -43,7 +59,7 @@ def read_users_me(token: str = Depends(oauth2_scheme), db: Session = Depends(get
         email: str = payload.get("sub")
         if email is None:
             raise HTTPException(status_code=401)
-    except JWTError:
+    except jwt.PyJWTError:
         raise HTTPException(status_code=401)
     user = db.query(models.User).filter(models.User.email == email).first()
     if user is None:

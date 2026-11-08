@@ -1,6 +1,9 @@
-from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
+
+from sqlalchemy.orm import Session
+
 from .. import models
+
 
 def collect_rack_metrics(db: Session, rack_id: int):
     return {"power_watts": 3500.0, "temperature_c": 22.5, "humidity_pct": 45.0}

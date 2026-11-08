@@ -1,6 +1,9 @@
-from sqlalchemy.orm import Session
 from datetime import datetime
+
+from sqlalchemy.orm import Session
+
 from .. import models
+
 
 def transition_asset(db: Session, asset_id: int, new_status: models.AssetStatus):
     asset = db.query(models.Asset).filter(models.Asset.id == asset_id).first()

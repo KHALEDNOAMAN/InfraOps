@@ -1,7 +1,20 @@
-from pydantic import BaseModel
-from typing import List, Optional, Any
 from datetime import datetime
-from .models import RoleEnum, RackStatus, AssetType, AssetStatus, VMStatus, HypervisorType, LicenseType, EventType, ChangeType, RiskLevel, ChangeStatus, ResourceType
+from typing import List, Optional
+
+from pydantic import BaseModel
+
+from .models import (
+    AssetStatus,
+    AssetType,
+    ChangeStatus,
+    ChangeType,
+    EventType,
+    HypervisorType,
+    RackStatus,
+    RiskLevel,
+    VMStatus,
+)
+
 
 class DataCenterBase(BaseModel):
     name: str

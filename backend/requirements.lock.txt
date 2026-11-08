@@ -2,23 +2,23 @@
 #   sed -E 's/[=<>!~].*//' requirements.txt | grep -E '^[A-Za-z]' > u.txt
 #   uv pip compile --python-version 3.11 -o requirements.lock.txt u.txt
 #   pip-audit -r requirements.lock.txt
-alembic==1.20.0
-    # via -r C:/Users/Public/fxwork/InfraOps/_u.txt
+alembic==1.20.1
+    # via -r u.txt
 annotated-doc==0.0.5
     # via fastapi
 annotated-types==0.8.0
     # via pydantic
-anyio==4.15.1
+anyio==4.16.0
     # via
     #   httpx
     #   starlette
 apscheduler==3.11.3
-    # via -r C:/Users/Public/fxwork/InfraOps/_u.txt
+    # via -r u.txt
 bcrypt==5.0.0
     # via
-    #   -r C:/Users/Public/fxwork/InfraOps/_u.txt
+    #   -r u.txt
     #   paramiko
-certifi==2026.7.22
+certifi==2026.10.23
     # via
     #   httpcore
     #   httpx
@@ -26,14 +26,14 @@ cffi==2.1.1
     # via
     #   cryptography
     #   pynacl
-click==8.5.0
+click==8.5.1
     # via uvicorn
 cloudpickle==3.1.2
     # via joblib
 cryptography==50.0.2
     # via paramiko
-fastapi==0.143.1
-    # via -r C:/Users/Public/fxwork/InfraOps/_u.txt
+fastapi==0.162.2
+    # via -r u.txt
 h11==0.16.0
     # via
     #   httpcore
@@ -41,7 +41,7 @@ h11==0.16.0
 httpcore==1.0.9
     # via httpx
 httpx==0.28.1
-    # via -r C:/Users/Public/fxwork/InfraOps/_u.txt
+    # via -r u.txt
 idna==3.20
     # via
     #   anyio
@@ -54,46 +54,46 @@ mako==1.4.3
     # via alembic
 markupsafe==3.0.4
     # via mako
-narwhals==2.27.1
+narwhals==2.28.0
     # via scikit-learn
 numpy==2.4.6
     # via
-    #   -r C:/Users/Public/fxwork/InfraOps/_u.txt
+    #   -r u.txt
     #   scikit-learn
     #   scipy
-opentelemetry-api==1.45.1
+opentelemetry-api==1.45.2
     # via fastapi
-paramiko==5.0.0
-    # via -r C:/Users/Public/fxwork/InfraOps/_u.txt
+paramiko==5.1.0
+    # via -r u.txt
 passlib==1.7.4
-    # via -r C:/Users/Public/fxwork/InfraOps/_u.txt
+    # via -r u.txt
 psutil==7.2.2
-    # via -r C:/Users/Public/fxwork/InfraOps/_u.txt
-pycparser==3.11
+    # via -r u.txt
+pycparser==3.12
     # via cffi
-pydantic==2.14.1
+pydantic==2.14.3
     # via
-    #   -r C:/Users/Public/fxwork/InfraOps/_u.txt
+    #   -r u.txt
     #   fastapi
-pydantic-core==2.50.1
+pydantic-core==2.50.4
     # via pydantic
 pyjwt==2.15.1
-    # via -r C:/Users/Public/fxwork/InfraOps/_u.txt
+    # via -r u.txt
 pynacl==1.6.2
     # via paramiko
 python-dotenv==1.2.4
-    # via -r C:/Users/Public/fxwork/InfraOps/_u.txt
+    # via -r u.txt
 scikit-learn==1.9.1
-    # via -r C:/Users/Public/fxwork/InfraOps/_u.txt
+    # via -r u.txt
 scipy==1.17.1
     # via scikit-learn
-sqlalchemy==2.1.4
+sqlalchemy==2.1.8
     # via
-    #   -r C:/Users/Public/fxwork/InfraOps/_u.txt
+    #   -r u.txt
     #   alembic
-starlette==1.8.0
+starlette==1.10.0
     # via fastapi
-threadpoolctl==3.7.0
+threadpoolctl==3.8.0
     # via scikit-learn
 typing-extensions==4.16.0
     # via
@@ -106,13 +106,11 @@ typing-extensions==4.16.0
     #   sqlalchemy
     #   starlette
     #   typing-inspection
-typing-inspection==0.4.4
+typing-inspection==0.4.5
     # via
     #   fastapi
     #   pydantic
-tzdata==2026.5
-    # via tzlocal
-tzlocal==5.4.4
+tzlocal==5.4.5
     # via apscheduler
 uvicorn==0.54.0
-    # via -r C:/Users/Public/fxwork/InfraOps/_u.txt
+    # via -r u.txt

@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from ..database import get_db
+
 from .. import models
+from ..database import get_db
 from ..services.capacity_service import calculate_utilization, forecast_growth
 
 router = APIRouter()
@@ -37,7 +38,7 @@ def get_recommendations(asset_type: str, units: int, power: float, db: Session =
 @router.get("/licenses")
 def get_license_capacity(db: Session = Depends(get_db)):
     licenses = db.query(models.License).all()
-    return [{"software": l.software_name, "total": l.seats, "used": l.used_seats} for l in licenses]
+    return [{"software": lic.software_name, "total": lic.seats, "used": lic.used_seats} for lic in licenses]
 
 @router.get("/power-history")
 def get_power_history(rack_id: int, db: Session = Depends(get_db)):

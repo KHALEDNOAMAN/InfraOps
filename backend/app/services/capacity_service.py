@@ -1,6 +1,8 @@
+
 from sqlalchemy.orm import Session
+
 from .. import models
-import random
+
 
 def calculate_utilization(db: Session, datacenter_id: int):
     # Dummy logic for utilization

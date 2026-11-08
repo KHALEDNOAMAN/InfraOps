@@ -1,9 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
 from typing import List, Optional
-from ..database import get_db
-from .. import models, schemas
+
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import or_
+from sqlalchemy.orm import Session
+
+from .. import models, schemas
+from ..database import get_db
 
 router = APIRouter()
 
@@ -16,9 +18,12 @@ def list_assets(
     db: Session = Depends(get_db)
 ):
     q = db.query(models.Asset)
-    if type: q = q.filter(models.Asset.asset_type == type)
-    if status: q = q.filter(models.Asset.status == status)
-    if rack: q = q.filter(models.Asset.rack_id == rack)
+    if type:
+        q = q.filter(models.Asset.asset_type == type)
+    if status:
+        q = q.filter(models.Asset.status == status)
+    if rack:
+        q = q.filter(models.Asset.rack_id == rack)
     return q.all()
 
 @router.post("/", response_model=schemas.Asset)
@@ -56,7 +61,8 @@ def get_asset(id: int, db: Session = Depends(get_db)):
 @router.patch("/{id}", response_model=schemas.Asset)
 def update_asset(id: int, asset_data: dict, db: Session = Depends(get_db)):
     asset = db.query(models.Asset).filter(models.Asset.id == id).first()
-    if not asset: raise HTTPException(status_code=404)
+    if not asset:
+        raise HTTPException(status_code=404)
     for key, val in asset_data.items():
         setattr(asset, key, val)
     db.commit()
@@ -66,7 +72,8 @@ def update_asset(id: int, asset_data: dict, db: Session = Depends(get_db)):
 @router.post("/{id}/assign-rack")
 def assign_rack(id: int, rack_id: int, db: Session = Depends(get_db)):
     asset = db.query(models.Asset).filter(models.Asset.id == id).first()
-    if not asset: raise HTTPException(status_code=404)
+    if not asset:
+        raise HTTPException(status_code=404)
     asset.rack_id = rack_id
     db.commit()
     return {"status": "success"}
